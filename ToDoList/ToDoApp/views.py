@@ -13,8 +13,8 @@ def index(request):
 def addtask(request):
     context={}
 
-    form = createtask(request.POST or None)
-    
+    form = createtask(request.POST ,request.FILES)
+    print(request.FILES)
     if form.is_valid():
         form.save()
         return redirect(readtask)

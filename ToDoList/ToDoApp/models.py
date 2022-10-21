@@ -7,5 +7,6 @@ class Task(models.Model):
     descript = models.TextField()
     #deadline = models.TimeField()
     # priority = models.IntegerField()
+    image = models.ImageField(upload_to='test/',null=True)
     def __str__(self) :
         return self.title
