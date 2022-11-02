@@ -3,8 +3,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import createtask,CreateUserForm
 from .models import Task
-from django.contrib.auth import get_user_model,authenticate,login,logout
-User = get_user_model()
+from django.contrib.auth import authenticate,login,logout
+# User = get_user_model()
 
 from django.contrib.auth.decorators import login_required
 

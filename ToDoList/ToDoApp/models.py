@@ -17,7 +17,7 @@ class Task(models.Model):
 
     
 class UserManager(BaseUserManager):
-    def create_user(self,email,password=None,is_staff=False,is_admin=False,is_active=True):
+    def create_user(self,email,password=None):
         if not email:
             raise ValueError('A Email is necessary')
         if not password:
@@ -25,28 +25,27 @@ class UserManager(BaseUserManager):
         user_obj = self.model(
             email = self.normalize_email(email)
         )
-        user_obj.admin = is_admin
-        user_obj.active = is_active
-        user_obj.staff = is_staff
         user_obj.set_password(password)
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_staffuser(self,email,password=None):
+    def create_staffuser(self,email,password):
         user= self.create_user(
             email,
             password=password,
-            is_staff=True
         )
+        user.staff=True
+        user.save(using=self._db)
         return user
 
-    def create_superuser(self,email,password=None):
+    def create_superuser(self,email,password):
         user = self.create_user(
             email,
             password=password,
-            is_staff=True,
-            is_admin=True
         )
+        user.staff= True
+        user.admin = True
+        user.save(using=self._db)
         return user
 
 class User(AbstractBaseUser):
