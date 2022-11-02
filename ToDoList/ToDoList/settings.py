@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'ToDoApp'
 ]
 
+
+AUTH_USER_MODEL = 'ToDoApp.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
