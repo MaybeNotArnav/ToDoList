@@ -21,5 +21,6 @@
     >
     {% endfor %}
     <a href="{%url 'create'%}"><button>Add Tasks</button></a>
+    <span><a href='{% url "logout" %}'>Log Out</a></span>
   </body>
 </html>

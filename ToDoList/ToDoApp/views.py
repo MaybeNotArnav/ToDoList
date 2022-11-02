@@ -1,11 +1,12 @@
 
-from http.client import HTTPResponse
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import createtask,CreateUserForm
 from .models import Task
 from django.contrib.auth import get_user_model,authenticate,login,logout
 User = get_user_model()
+
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -23,12 +24,24 @@ def register(request):
     context = {'form':form}
     return render(request,'Register.html',context)
 
-def login(request):
+def loginPage(request):
 
-    if request.POST == 'POST':
-        pass
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        print('in here')
+        user = authenticate(request,email=email,password=password)
+        if user is not None:
+            login(request,user)
+            print('worked')
+            return redirect(readtask)
+        print(user)
     context ={}
     return render(request,'Login.html',context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
 
 def addtask(request):
     context={}
@@ -42,6 +55,7 @@ def addtask(request):
     # context['image']= 
     return render(request,'Form.html',context)
 
+@login_required(login_url='login')
 def readtask(request):
     list = Task.objects.all()
     data={
