@@ -16,14 +16,14 @@ class createtask(forms.ModelForm):
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['email','password1','password2']
+        fields = ['email','password','password2']
 
 class UserAdminCreationForm(forms.ModelForm):
     """
     A form for creating new users. Includes all the required
     fields, plus a repeated password.
     """
-    password1 = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
 
     class Meta:
@@ -35,9 +35,9 @@ class UserAdminCreationForm(forms.ModelForm):
         Verify both passwords match.
         '''
         cleaned_data = super().clean()
-        password1 = cleaned_data.get("password1")
+        password = cleaned_data.get("password")
         password2 = cleaned_data.get("password2")
-        if password1 is not None and password1 != password2:
+        if password is not None and password != password2:
             self.add_error("password2", "Your passwords must match")
         return cleaned_data
 
